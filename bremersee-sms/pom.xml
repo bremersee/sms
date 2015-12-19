@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bremersee</groupId>
     <artifactId>bremersee-sms</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>bremersee-sms</name>
     <description>SMS service project</description>
     <url>http://bremersee.github.io/sms/</url>
