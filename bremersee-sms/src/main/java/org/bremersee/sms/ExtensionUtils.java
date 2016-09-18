@@ -38,20 +38,62 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public abstract class ExtensionUtils {
 
-    private static final ObjectMapper DEFAULT_OBJECT_MAPPER = new ObjectMapper();
-    
-    private static final Map<Class<?>, JAXBContext> JAXB_CONTEXTS = new ConcurrentHashMap<>();
-
     private ExtensionUtils() {
     }
-    
+
+    private static final ObjectMapper DEFAULT_OBJECT_MAPPER = new ObjectMapper();
+
+    private static final Map<java.lang.reflect.AnnotatedElement, JAXBContext> JAXB_CONTEXTS = new ConcurrentHashMap<>();
+
     private static JAXBContext getJaxbContext(Class<?> valueType) throws JAXBException {
-        JAXBContext jaxbContext = JAXB_CONTEXTS.get(valueType);
+        JAXBContext jaxbContext = JAXB_CONTEXTS.get(valueType.getPackage());
         if (jaxbContext == null) {
-            jaxbContext = JAXBContext.newInstance(valueType);
-            JAXB_CONTEXTS.put(valueType, jaxbContext);
+            jaxbContext = JAXB_CONTEXTS.get(valueType);
+        }
+        if (jaxbContext == null) {
+            try {
+                jaxbContext = JAXBContext.newInstance(valueType.getPackage().getName());
+            } catch (JAXBException e) {
+                jaxbContext = JAXBContext.newInstance(valueType);
+                JAXB_CONTEXTS.put(valueType, jaxbContext);
+            }
         }
         return jaxbContext;
+    }
+
+    /**
+     * Transforms a XML node or a JSON map into an object.
+     * 
+     * @param xmlNodeOrJsonMap
+     *            the XML node or JSON map
+     * @param valueType
+     *            the class of the target object
+     * @param jaxbContext
+     *            the {@link JAXBContext} (can be null)
+     * @param objectMapper
+     *            the JSON object mapper (optional)
+     * @return the target object
+     * @throws Exception
+     *             if transformation fails
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T transform(Object xmlNodeOrJsonMap, Class<T> valueType, JAXBContext jaxbContext,
+            ObjectMapper objectMapper) throws Exception {
+        if (xmlNodeOrJsonMap == null) {
+            return null;
+        }
+        Validate.notNull(valueType, "valueType must not be null");
+        if (valueType.isAssignableFrom(xmlNodeOrJsonMap.getClass())) {
+            return valueType.cast(xmlNodeOrJsonMap);
+        }
+        if (xmlNodeOrJsonMap instanceof Node) {
+            return xmlNodeToObject((Node) xmlNodeOrJsonMap, valueType, jaxbContext);
+        }
+        if (xmlNodeOrJsonMap instanceof Map) {
+            return jsonMapToObject((Map<String, Object>) xmlNodeOrJsonMap, valueType, objectMapper);
+        }
+        throw new IllegalArgumentException("xmlNodeOrJsonMap must be of type " + valueType + ", " + Node.class.getName()
+                + " or of type " + Map.class.getName());
     }
 
     /**
@@ -66,7 +108,11 @@ public abstract class ExtensionUtils {
      * @return the target object
      * @throws Exception
      *             if transformation fails
+     * @deprecated Use
+     *             {@link ExtensionUtils#transform(Object, Class, JAXBContext, ObjectMapper)}
+     *             instead.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     public static <T> T transform(Object xmlNodeOrJsonMap, Class<T> valueType, Object jaxbContextOrObjectMapper)
             throws Exception {

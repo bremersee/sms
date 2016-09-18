@@ -129,7 +129,7 @@ public class ModelTests {
 
         m.marshal(readResponse, System.out);
         
-        GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, jaxbContext);
+        GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, jaxbContext, new ObjectMapper());
         readResponse.setExtension(tmp);
         
         TestCase.assertEquals(response, readResponse);
@@ -162,7 +162,7 @@ public class ModelTests {
         String newJsonStr = om.writerWithDefaultPrettyPrinter().writeValueAsString(readResponse);
         System.out.println(newJsonStr);
 
-        GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, om);
+        GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, null, om);
         readResponse.setExtension(tmp);
         
         TestCase.assertEquals(response, readResponse);
