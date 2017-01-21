@@ -18,17 +18,18 @@ package org.bremersee.sms.model;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
+@SuppressWarnings("unused")
 @XmlRegistry
 public class ObjectFactory {
-    
+
     public GoyyaSmsSendResponseDto createGoyyaSmsSendResponseDto() {
         return new GoyyaSmsSendResponseDto();
     }
-    
+
     public SmsSendRequestDto createSmsSendRequestDto() {
         return new SmsSendRequestDto();
     }
-    
+
     public SmsSendResponseDto createSmsSendResponseDto() {
         return new SmsSendResponseDto();
     }

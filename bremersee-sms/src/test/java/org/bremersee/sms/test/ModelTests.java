@@ -16,14 +16,8 @@
 
 package org.bremersee.sms.test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.Date;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import junit.framework.TestCase;
 import org.bremersee.sms.ExtensionUtils;
 import org.bremersee.sms.model.GoyyaSmsSendResponseDto;
 import org.bremersee.sms.model.SmsSendRequestDto;
@@ -31,9 +25,12 @@ import org.bremersee.sms.model.SmsSendResponseDto;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import junit.framework.TestCase;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
 /**
  * @author Christian Bremer
@@ -47,13 +44,17 @@ public class ModelTests {
         this.jaxbContext = JAXBContext
                 .newInstance(org.bremersee.sms.model.ObjectFactory.class.getPackage().getName());
     }
-    
+
     @Test
     public void testXmlSmsSendRequestDto() throws Exception {
 
         System.out.println("Testing XML SmsSendRequestDto ...");
 
-        SmsSendRequestDto request = new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L));
+        SmsSendRequestDto request = new SmsSendRequestDto(
+                "bremersee",
+                "0123456789",
+                "Hello",
+                new Date(System.currentTimeMillis() + 30000L));
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -81,7 +82,11 @@ public class ModelTests {
 
         System.out.println("Testing JSON SmsSendRequestDto ...");
 
-        SmsSendRequestDto request = new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L));
+        SmsSendRequestDto request = new SmsSendRequestDto(
+                "bremersee",
+                "0123456789",
+                "Hello",
+                new Date(System.currentTimeMillis() + 30000L));
 
         ObjectMapper om = new ObjectMapper();
 
@@ -100,17 +105,17 @@ public class ModelTests {
 
         System.out.println("OK\n");
     }
-    
+
     @Test
     public void testXmlSmsSendResponseDto() throws Exception {
 
         System.out.println("Testing XML SmsSendResponseDto ...");
-        
+
         GoyyaSmsSendResponseDto goyyaResponse = new GoyyaSmsSendResponseDto("OK");
 
         SmsSendResponseDto response = new SmsSendResponseDto(
-                new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L)), 
-                goyyaResponse.isOk(), 
+                new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L)),
+                goyyaResponse.isOk(),
                 goyyaResponse);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -128,10 +133,10 @@ public class ModelTests {
                 .unmarshal(new ByteArrayInputStream(xmlStr.getBytes("UTF-8")));
 
         m.marshal(readResponse, System.out);
-        
+
         GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, jaxbContext, new ObjectMapper());
         readResponse.setExtension(tmp);
-        
+
         TestCase.assertEquals(response, readResponse);
 
         System.out.println("OK\n");
@@ -145,8 +150,8 @@ public class ModelTests {
         GoyyaSmsSendResponseDto goyyaResponse = new GoyyaSmsSendResponseDto("OK");
 
         SmsSendResponseDto response = new SmsSendResponseDto(
-                new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L)), 
-                goyyaResponse.isOk(), 
+                new SmsSendRequestDto("bremersee", "0123456789", "Hello", new Date(System.currentTimeMillis() + 30000L)),
+                goyyaResponse.isOk(),
                 goyyaResponse);
 
         ObjectMapper om = new ObjectMapper();
@@ -164,11 +169,11 @@ public class ModelTests {
 
         GoyyaSmsSendResponseDto tmp = ExtensionUtils.transform(readResponse.getExtension(), GoyyaSmsSendResponseDto.class, null, om);
         readResponse.setExtension(tmp);
-        
+
         TestCase.assertEquals(response, readResponse);
         //TestCase.assertEquals(jsonStr, newJsonStr);
 
         System.out.println("OK\n");
     }
-    
+
 }

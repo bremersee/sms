@@ -20,9 +20,10 @@ package org.bremersee.sms;
  * <p>
  * Exception that might be thrown by a {@link SmsService} implementation.
  * </p>
- * 
+ *
  * @author Christian Bremer
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class SmsException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
@@ -31,13 +32,13 @@ public class SmsException extends RuntimeException {
      * Default constructor.
      */
     public SmsException() {
+        super();
     }
 
     /**
      * Constructs the exception with the specified message.
-     * 
-     * @param message
-     *            the exception message
+     *
+     * @param message the exception message
      */
     public SmsException(String message) {
         super(message);
@@ -45,9 +46,8 @@ public class SmsException extends RuntimeException {
 
     /**
      * Constructs the exception with the specified cause.
-     * 
-     * @param cause
-     *            the cause
+     *
+     * @param cause the cause
      */
     public SmsException(Throwable cause) {
         super(cause);
@@ -55,11 +55,9 @@ public class SmsException extends RuntimeException {
 
     /**
      * Constructs the exception with the specified message and cause.
-     * 
-     * @param message
-     *            the exception message
-     * @param cause
-     *            the cause
+     *
+     * @param message the exception message
+     * @param cause   the cause
      */
     public SmsException(String message, Throwable cause) {
         super(message, cause);

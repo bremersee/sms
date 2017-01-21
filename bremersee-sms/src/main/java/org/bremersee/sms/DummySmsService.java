@@ -23,22 +23,20 @@ import org.bremersee.sms.model.SmsSendResponseDto;
  * <p>
  * A dummy implementation that does not send any SMS.
  * </p>
- * 
+ *
  * @author Christian Bremer
  */
 public class DummySmsService extends AbstractSmsService implements SmsService {
 
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public DummySmsService() {
+        super();
     }
     
-    /* (non-Javadoc)
-     * @see org.bremersee.sms.service.AbstractSmsService#doSendSms(org.bremersee.sms.service.model.SmsSendRequestDto)
-     */
     @Override
-    public SmsSendResponseDto doSendSms(SmsSendRequestDto smsSendRequest) throws SmsException {
+    public SmsSendResponseDto doSendSms(SmsSendRequestDto smsSendRequest) {
         log.warn("THIS IS ONLY A DUMMY SMS SERVICE - SMS WAS NOT SENT !!!");
         return new SmsSendResponseDto(smsSendRequest, true);
     }

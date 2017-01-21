@@ -16,11 +16,11 @@
 
 package org.bremersee.sms.test;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 /**
  * @author Christian Bremer
@@ -34,7 +34,7 @@ public class XmlSchemaTests {
         //@formatter:off
         this.jaxbContext = JAXBContext.newInstance(
                 org.bremersee.sms.model.ObjectFactory.class.getPackage().getName()
-                );
+        );
         //@formatter:on
     }
 

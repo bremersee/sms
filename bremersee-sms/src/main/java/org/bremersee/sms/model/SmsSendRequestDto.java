@@ -16,75 +16,67 @@
 
 package org.bremersee.sms.model;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * @author Christian Bremer
  */
 //@formatter:off
+@SuppressWarnings({"WeakerAccess", "unused"})
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "smsSendRequest")
-@XmlType(name = "smsSendRequestType", propOrder = { 
+@XmlType(name = "smsSendRequestType", propOrder = {
         "requestId",
-        "sender", 
-        "receiver", 
-        "message", 
-        "sendTime", 
-        "extension" 
+        "sender",
+        "receiver",
+        "message",
+        "sendTime",
+        "extension"
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.ALWAYS)
-@JsonAutoDetect(fieldVisibility = Visibility.NONE, 
-    getterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-    creatorVisibility = Visibility.NONE, 
-    isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-    setterVisibility = Visibility.PROTECTED_AND_PUBLIC)
+@JsonAutoDetect(fieldVisibility = Visibility.NONE,
+        getterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        creatorVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        setterVisibility = Visibility.PROTECTED_AND_PUBLIC)
 @JsonPropertyOrder(value = {
-      "requestId",
-      "sender", 
-      "receiver", 
-      "message", 
-      "sendTime", 
-      "extension" 
+        "requestId",
+        "sender",
+        "receiver",
+        "message",
+        "sendTime",
+        "extension"
 })
 public class SmsSendRequestDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private String requestId = UUID.randomUUID().toString();
-    
+
     private String sender;
-    
+
     private String receiver;
-    
+
     private String message;
-    
+
     private Date sendTime;
-    
-    private Object extension;
+
+    private Object extension; // NOSONAR
 
     /**
      * Default constructor.
      */
     public SmsSendRequestDto() {
+        super();
     }
 
     public SmsSendRequestDto(String receiver, String message) {
@@ -140,7 +132,7 @@ public class SmsSendRequestDto implements Serializable {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // NOSONAR
         if (this == obj)
             return true;
         if (obj == null)
@@ -181,68 +173,68 @@ public class SmsSendRequestDto implements Serializable {
         return true;
     }
 
-    @XmlElement(name = "requestId", required = false)
-    @JsonProperty(value = "requestId", required = false)
+    @XmlElement(name = "requestId")
+    @JsonProperty(value = "requestId")
     public String getRequestId() {
         return requestId;
     }
 
-    @JsonProperty(value = "requestId", required = false)
+    @JsonProperty(value = "requestId")
     public void setRequestId(String requestId) {
         this.requestId = requestId;
     }
 
-    @XmlElement(name = "sender", required = false)
-    @JsonProperty(value = "sender", required = false)
+    @XmlElement(name = "sender")
+    @JsonProperty(value = "sender")
     public String getSender() {
         return sender;
     }
 
-    @JsonProperty(value = "sender", required = false)
+    @JsonProperty(value = "sender")
     public void setSender(String sender) {
         this.sender = sender;
     }
 
-    @XmlElement(name = "receiver", required = false)
-    @JsonProperty(value = "receiver", required = false)
+    @XmlElement(name = "receiver")
+    @JsonProperty(value = "receiver")
     public String getReceiver() {
         return receiver;
     }
 
-    @JsonProperty(value = "receiver", required = false)
+    @JsonProperty(value = "receiver")
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
-    @XmlElement(name = "message", required = false)
-    @JsonProperty(value = "message", required = false)
+    @XmlElement(name = "message")
+    @JsonProperty(value = "message")
     public String getMessage() {
         return message;
     }
 
-    @JsonProperty(value = "message", required = false)
+    @JsonProperty(value = "message")
     public void setMessage(String message) {
         this.message = message;
     }
 
-    @XmlElement(name = "sendTime", required = false)
-    @JsonProperty(value = "sendTime", required = false)
+    @XmlElement(name = "sendTime")
+    @JsonProperty(value = "sendTime")
     public Date getSendTime() {
         return sendTime;
     }
 
-    @JsonProperty(value = "sendTime", required = false)
+    @JsonProperty(value = "sendTime")
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
     }
 
-    @XmlAnyElement(lax = false)
-    @JsonProperty(value = "extension", required = false)
+    @XmlAnyElement
+    @JsonProperty(value = "extension")
     public Object getExtension() {
         return extension;
     }
 
-    @JsonProperty(value = "extension", required = false)
+    @JsonProperty(value = "extension")
     public void setExtension(Object extension) {
         this.extension = extension;
     }

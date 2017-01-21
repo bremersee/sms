@@ -16,10 +16,10 @@
 
 package org.bremersee.sms;
 
-import java.util.Date;
-
 import org.bremersee.sms.model.SmsSendRequestDto;
 import org.bremersee.sms.model.SmsSendResponseDto;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -28,6 +28,7 @@ import org.bremersee.sms.model.SmsSendResponseDto;
  * 
  * @author Christian Bremer
  */
+@SuppressWarnings({"unused", "SameParameterValue"})
 public interface SmsService {
     
     /**
@@ -37,7 +38,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms() throws SmsException;
+    SmsSendResponseDto sendSms();
 
     /**
      * Sends a SMS message from the default sender to the default receiver.
@@ -48,7 +49,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(String message) throws SmsException;
+    SmsSendResponseDto sendSms(String message);
 
     /**
      * Sends a SMS message from the default sender.
@@ -61,7 +62,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(String receiver, String message) throws SmsException;
+    SmsSendResponseDto sendSms(String receiver, String message);
 
     /**
      * Sends a SMS message from the default sender at the specified time.
@@ -76,7 +77,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(String receiver, String message, Date sendTime) throws SmsException;
+    SmsSendResponseDto sendSms(String receiver, String message, Date sendTime);
 
     /**
      * Sends a SMS message.
@@ -91,7 +92,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(String sender, String receiver, String message) throws SmsException;
+    SmsSendResponseDto sendSms(String sender, String receiver, String message);
 
     /**
      * Sends a SMS message at the specified time.
@@ -108,7 +109,7 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(String sender, String receiver, String message, Date sendTime) throws SmsException;
+    SmsSendResponseDto sendSms(String sender, String receiver, String message, Date sendTime);
     
     /**
      * Sends a SMS specified by the request.
@@ -119,6 +120,6 @@ public interface SmsService {
      * @throws SmsException
      *             if sending of the message fails
      */
-    SmsSendResponseDto sendSms(SmsSendRequestDto smsSendRequest) throws SmsException;
+    SmsSendResponseDto sendSms(SmsSendRequestDto smsSendRequest);
 
 }

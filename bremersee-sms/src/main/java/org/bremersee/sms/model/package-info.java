@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * @author Christian Bremer
- */
 //@formatter:off
 @javax.xml.bind.annotation.XmlSchema(
         namespace = "http://bremersee.org/xmlschemas/sms/v1", 

@@ -16,61 +16,53 @@
 
 package org.bremersee.sms.model;
 
-import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 
 /**
  * @author Christian Bremer
  */
 //@formatter:off
+@SuppressWarnings({"WeakerAccess", "unused"})
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "smsSendResponse")
-@XmlType(name = "smsSendResponseType", propOrder = { 
+@XmlType(name = "smsSendResponseType", propOrder = {
         "request",
-        "successfullySent", 
-        "extension" 
+        "successfullySent",
+        "extension"
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.ALWAYS)
-@JsonAutoDetect(fieldVisibility = Visibility.NONE, 
-  getterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-  creatorVisibility = Visibility.NONE, 
-  isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-  setterVisibility = Visibility.PROTECTED_AND_PUBLIC)
+@JsonAutoDetect(fieldVisibility = Visibility.NONE,
+        getterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        creatorVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        setterVisibility = Visibility.PROTECTED_AND_PUBLIC)
 @JsonPropertyOrder(value = {
-    "request",
-    "successfullySent", 
-    "extension" 
+        "request",
+        "successfullySent",
+        "extension"
 })
 public class SmsSendResponseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private SmsSendRequestDto request;
-    
+
     private boolean successfullySent;
-    
-    private Object extension;
+
+    private Object extension; // NOSONAR
 
     /**
      * Default constructor.
      */
     public SmsSendResponseDto() {
+        super();
     }
 
     public SmsSendResponseDto(boolean successfullySent) {
@@ -113,6 +105,7 @@ public class SmsSendResponseDto implements Serializable {
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -137,13 +130,13 @@ public class SmsSendResponseDto implements Serializable {
         return true;
     }
 
-    @XmlElement(name = "request", required = false)
-    @JsonProperty(value = "request", required = false)
+    @XmlElement(name = "request")
+    @JsonProperty(value = "request")
     public SmsSendRequestDto getRequest() {
         return request;
     }
 
-    @JsonProperty(value = "request", required = false)
+    @JsonProperty(value = "request")
     public void setRequest(SmsSendRequestDto request) {
         this.request = request;
     }
@@ -159,13 +152,13 @@ public class SmsSendResponseDto implements Serializable {
         this.successfullySent = successfullySent;
     }
 
-    @XmlAnyElement(lax = false)
-    @JsonProperty(value = "extension", required = false)
+    @XmlAnyElement
+    @JsonProperty(value = "extension")
     public Object getExtension() {
         return extension;
     }
 
-    @JsonProperty(value = "extension", required = false)
+    @JsonProperty(value = "extension")
     public void setExtension(Object extension) {
         this.extension = extension;
     }

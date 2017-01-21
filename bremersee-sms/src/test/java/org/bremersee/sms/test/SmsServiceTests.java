@@ -26,13 +26,14 @@ import org.junit.Test;
  * @author Christian Bremer
  */
 public class SmsServiceTests {
-    
+
     private static final String username = null;
     private static final String password = null;
     private static final String receiver = "0123456789";
-    
+
     private SmsService smsService;
-    
+
+    @SuppressWarnings("ConstantConditions")
     @Before
     public void createSmsService() {
         if (username != null && password != null) {
@@ -41,7 +42,7 @@ public class SmsServiceTests {
             smsService = new DummySmsService();
         }
     }
-    
+
     @Test
     public void testSendSms() throws Exception {
         smsService.sendSms("bremersee", receiver, "Hello sms service user");

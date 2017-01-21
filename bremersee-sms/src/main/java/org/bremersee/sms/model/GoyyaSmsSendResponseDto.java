@@ -16,58 +16,47 @@
 
 package org.bremersee.sms.model;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.bremersee.sms.GoyyaSmsService;
+
+import javax.xml.bind.annotation.*;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-
-import org.bremersee.sms.GoyyaSmsService;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * <p>
  * A SMS service response extension from the {@link GoyyaSmsService}.
  * </p>
- * 
+ *
  * @author Christian Bremer
  */
 //@formatter:off
+@SuppressWarnings({"WeakerAccess", "unused"})
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "goyyaSmsSendResponse")
-@XmlType(name = "goyyaSmsSendResponseType", propOrder = { 
-        "response", 
-        "ID", 
-        "count", 
-        "reponseParsingException" 
+@XmlType(name = "goyyaSmsSendResponseType", propOrder = {
+        "response",
+        "ID",
+        "count",
+        "responseParsingException"
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.ALWAYS)
-@JsonAutoDetect(fieldVisibility = Visibility.NONE, 
-    getterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-    creatorVisibility = Visibility.NONE, 
-    isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-    setterVisibility = Visibility.PROTECTED_AND_PUBLIC
+@JsonAutoDetect(fieldVisibility = Visibility.NONE,
+        getterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        creatorVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+        setterVisibility = Visibility.PROTECTED_AND_PUBLIC
 )
-@JsonPropertyOrder(value = { 
-        "response", 
-        "ID", 
-        "count", 
-        "reponseParsingException" 
+@JsonPropertyOrder(value = {
+        "response",
+        "ID",
+        "count",
+        "responseParsingException"
 })
 //@formatter:on
 public class GoyyaSmsSendResponseDto implements Serializable {
@@ -78,26 +67,26 @@ public class GoyyaSmsSendResponseDto implements Serializable {
 
     private String response = null;
 
-    private String ID = null;
+    private String ID = null; // NOSONAR
 
     private Integer count = null;
 
-    private ResponseParsingExceptionDto reponseParsingException = null;
+    private ResponseParsingExceptionDto responseParsingException = null;
 
     /**
      * Default constructor.
      */
     public GoyyaSmsSendResponseDto() {
+        super();
     }
 
     /**
      * Constructs a SMS service response from the real response of the Goyya SMS
      * service.
-     * 
-     * @param response
-     *            the real response from the Goyya SMS service
+     *
+     * @param response the real response from the Goyya SMS service
      */
-    public GoyyaSmsSendResponseDto(String response) {
+    public GoyyaSmsSendResponseDto(String response) { // NOSONAR
         this.response = response;
         try {
             if (response != null && response.startsWith(SUCCESS_RESPONSE)) {
@@ -109,11 +98,11 @@ public class GoyyaSmsSendResponseDto implements Serializable {
                     String tmp = response.substring(i1 + 1, i2);
                     String[] a = tmp.split(",");
 
-                    if (a.length > 0) {
+                    if (a.length > 0) { // NOSONAR
                         this.ID = a[0].trim();
                     }
 
-                    if (a.length > 1) {
+                    if (a.length > 1) { // NOSONAR
                         a[1] = a[1].trim();
                         int i3 = a[1].indexOf(' ');
                         if (i3 > 0) {
@@ -123,7 +112,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
                 }
             }
         } catch (Exception e) {
-            this.reponseParsingException = new ResponseParsingExceptionDto(e);
+            this.responseParsingException = new ResponseParsingExceptionDto(e);
         }
     }
 
@@ -134,9 +123,9 @@ public class GoyyaSmsSendResponseDto implements Serializable {
      */
     @Override
     public String toString() {
-        return String.format("%s [response = %s, ID = %s, count = %s, reponseParsingException = %s]",
+        return String.format("%s [response = %s, ID = %s, count = %s, responseParsingException = %s]",
                 getClass().getName(), response, ID, count,
-                (reponseParsingException == null ? "null" : reponseParsingException.getMessage()));
+                responseParsingException == null ? "null" : responseParsingException.getMessage());
     }
 
     /* (non-Javadoc)
@@ -148,7 +137,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         int result = 1;
         result = prime * result + ((ID == null) ? 0 : ID.hashCode());
         result = prime * result + ((count == null) ? 0 : count.hashCode());
-        result = prime * result + ((reponseParsingException == null) ? 0 : reponseParsingException.hashCode());
+        result = prime * result + ((responseParsingException == null) ? 0 : responseParsingException.hashCode());
         result = prime * result + ((response == null) ? 0 : response.hashCode());
         return result;
     }
@@ -157,7 +146,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // NOSONAR
         if (this == obj)
             return true;
         if (obj == null)
@@ -175,10 +164,10 @@ public class GoyyaSmsSendResponseDto implements Serializable {
                 return false;
         } else if (!count.equals(other.count))
             return false;
-        if (reponseParsingException == null) {
-            if (other.reponseParsingException != null)
+        if (responseParsingException == null) {
+            if (other.responseParsingException != null)
                 return false;
-        } else if (!reponseParsingException.equals(other.reponseParsingException))
+        } else if (!responseParsingException.equals(other.responseParsingException))
             return false;
         if (response == null) {
             if (other.response != null)
@@ -201,8 +190,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Returns the real response from the Goyya SMS service.
      */
-    @XmlElement(name = "response", required = false)
-    @JsonProperty(value = "response", required = false)
+    @XmlElement(name = "response")
+    @JsonProperty(value = "response")
     public String getResponse() {
         return response;
     }
@@ -210,7 +199,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Sets the real response from the Goyya SMS service.
      */
-    @JsonProperty(value = "response", required = false)
+    @JsonProperty(value = "response")
     protected void setResponse(String response) {
         this.response = response;
     }
@@ -218,8 +207,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Returns the ID from the Goyya SMS service.
      */
-    @XmlElement(name = "ID", required = false)
-    @JsonProperty(value = "ID", required = false)
+    @XmlElement(name = "ID")
+    @JsonProperty(value = "ID")
     public String getID() {
         return ID;
     }
@@ -227,7 +216,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Sets the ID from the Goyya SMS service.
      */
-    @JsonProperty(value = "ID", required = false)
+    @JsonProperty(value = "ID")
     protected void setID(String iD) {
         ID = iD;
     }
@@ -235,8 +224,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Returns the size of sent messages.
      */
-    @XmlElement(name = "count", required = false)
-    @JsonProperty(value = "count", required = false)
+    @XmlElement(name = "count")
+    @JsonProperty(value = "count")
     public Integer getCount() {
         return count;
     }
@@ -244,7 +233,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
     /**
      * Sets the size of sent messages.
      */
-    @JsonProperty(value = "count", required = false)
+    @JsonProperty(value = "count")
     protected void setCount(Integer count) {
         this.count = count;
     }
@@ -253,19 +242,19 @@ public class GoyyaSmsSendResponseDto implements Serializable {
      * Returns the exception that occurred by parsing the real response from the
      * Goyya service or {@code null} if there is no such exception.
      */
-    @XmlElement(name = "reponseParsingException", required = false)
-    @JsonProperty(value = "reponseParsingException", required = false)
-    public ResponseParsingExceptionDto getReponseParsingException() {
-        return reponseParsingException;
+    @XmlElement(name = "responseParsingException")
+    @JsonProperty(value = "responseParsingException")
+    public ResponseParsingExceptionDto getResponseParsingException() {
+        return responseParsingException;
     }
 
     /**
      * Sets the exception that occurred by parsing the real response from the
      * Goyya service or {@code null} if there is no such exception.
      */
-    @JsonProperty(value = "reponseParsingException", required = false)
-    protected void setReponseParsingException(ResponseParsingExceptionDto reponseParsingException) {
-        this.reponseParsingException = reponseParsingException;
+    @JsonProperty(value = "responseParsingException")
+    protected void setResponseParsingException(ResponseParsingExceptionDto responseParsingException) {
+        this.responseParsingException = responseParsingException;
     }
 
     /**
@@ -273,26 +262,26 @@ public class GoyyaSmsSendResponseDto implements Serializable {
      * A data transfer object for an exception that might occur by parsing the
      * response from the Goyya SMS service.
      * </p>
-     * 
+     *
      * @author Christian Bremer
      */
     //@formatter:off
     @XmlAccessorType(XmlAccessType.PROPERTY)
-    @XmlType(name = "responseParsingExceptionType", propOrder = { 
-            "message", 
-            "stackTrace" 
+    @XmlType(name = "responseParsingExceptionType", propOrder = {
+            "message",
+            "stackTrace"
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonInclude(Include.ALWAYS)
-    @JsonAutoDetect(fieldVisibility = Visibility.NONE, 
-        getterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-        creatorVisibility = Visibility.NONE, 
-        isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC, 
-        setterVisibility = Visibility.PROTECTED_AND_PUBLIC
+    @JsonAutoDetect(fieldVisibility = Visibility.NONE,
+            getterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+            creatorVisibility = Visibility.NONE,
+            isGetterVisibility = Visibility.PROTECTED_AND_PUBLIC,
+            setterVisibility = Visibility.PROTECTED_AND_PUBLIC
     )
-    @JsonPropertyOrder(value = { 
-            "message", 
-            "stackTrace" 
+    @JsonPropertyOrder(value = {
+            "message",
+            "stackTrace"
     })
     //@formatter:on
     public static class ResponseParsingExceptionDto implements Serializable {
@@ -307,13 +296,13 @@ public class GoyyaSmsSendResponseDto implements Serializable {
          * Default constructor.
          */
         public ResponseParsingExceptionDto() {
+            super();
         }
 
         /**
          * Creates a response parsing exception with the specified exception.
-         * 
-         * @param exception
-         *            the exception
+         *
+         * @param exception the exception
          */
         public ResponseParsingExceptionDto(Exception exception) {
             if (exception != null) {
@@ -381,8 +370,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         /**
          * Returns the message of the exception (can be {@code null}).
          */
-        @XmlElement(name = "message", required = false)
-        @JsonProperty(value = "message", required = false)
+        @XmlElement(name = "message")
+        @JsonProperty(value = "message")
         public String getMessage() {
             return message;
         }
@@ -390,7 +379,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         /**
          * Sets the message of the exception (can be {@code null}).
          */
-        @JsonProperty(value = "message", required = false)
+        @JsonProperty(value = "message")
         protected void setMessage(String message) {
             this.message = message;
         }
@@ -398,8 +387,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         /**
          * Returns the steck trace of the exception (can be {@code null}).
          */
-        @XmlElement(name = "stackTrace", required = false)
-        @JsonProperty(value = "stackTrace", required = false)
+        @XmlElement(name = "stackTrace")
+        @JsonProperty(value = "stackTrace")
         public String getStackTrace() {
             return stackTrace;
         }
@@ -407,7 +396,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         /**
          * Sets the steck trace of the exception (can be {@code null}).
          */
-        @JsonProperty(value = "stackTrace", required = false)
+        @JsonProperty(value = "stackTrace")
         protected void setStackTrace(String stackTrace) {
             this.stackTrace = stackTrace;
         }

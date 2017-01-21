@@ -16,6 +16,15 @@
 
 package org.bremersee.sms;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.bremersee.sms.model.GoyyaSmsSendResponseDto;
+import org.bremersee.sms.model.SmsSendRequestDto;
+import org.bremersee.sms.model.SmsSendResponseDto;
+import org.bremersee.utils.WebUtils;
+
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,32 +41,19 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.bremersee.sms.model.GoyyaSmsSendResponseDto;
-import org.bremersee.sms.model.SmsSendRequestDto;
-import org.bremersee.sms.model.SmsSendResponseDto;
-import org.bremersee.utils.WebUtils;
-
 //@formatter:off
+
 /**
  * <p>
  * A SMS service implementation that uses the Goyya SMS Services (
  * <a href="https://www.goyya.com/sms-services">https://www.goyya.com/sms-services</a>
  * ).
  * </p>
- * 
+ *
  * @author Christian Bremer
  */
 //@formatter:on
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
@@ -92,7 +88,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     private static final String GATEWAY_USER_ID_KEY = "id";
 
-    private static final String GATEWAY_USER_PASSWORD_KEY = "pw";
+    private static final String GATEWAY_USER_PASSWORD_KEY = "pw"; // NOSONAR
 
     private static final String SENDER_KEY = "sender";
 
@@ -146,11 +142,9 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Constructs a SMS service the the specified user name and password.
-     * 
-     * @param username
-     *            the user name
-     * @param password
-     *            the password
+     *
+     * @param username the user name
+     * @param password the password
      */
     public GoyyaSmsService(String username, String password) {
         this(username, password, null);
@@ -158,13 +152,10 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Constructs a SMS service the the specified user name, password and URL.
-     * 
-     * @param username
-     *            the user name
-     * @param password
-     *            the password
-     * @param url
-     *            the URL to use
+     *
+     * @param username the user name
+     * @param password the password
+     * @param url      the URL to use
      */
     public GoyyaSmsService(String username, String password, String url) {
         this.username = username;
@@ -176,9 +167,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the user name.
-     * 
-     * @param username
-     *            the user name
+     *
+     * @param username the user name
      */
     public void setUsername(String username) {
         this.username = username;
@@ -186,9 +176,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the password.
-     * 
-     * @param password
-     *            the password
+     *
+     * @param password the password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -196,7 +185,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Returns the URL which is used.
-     * 
+     *
      * @return the URL
      */
     public String getUrl() {
@@ -205,9 +194,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the URL to use.
-     * 
-     * @param url
-     *            the URL to use
+     *
+     * @param url the URL to use
      */
     public void setUrl(String url) {
         this.url = url;
@@ -215,7 +203,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Gets the host name of the proxy.
-     * 
+     *
      * @return the host name of the proxy
      */
     public String getProxyHost() {
@@ -224,9 +212,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the host name of the proxy.
-     * 
-     * @param proxyHost
-     *            the host name of the proxy
+     *
+     * @param proxyHost the host name of the proxy
      */
     public void setProxyHost(String proxyHost) {
         this.proxyHost = proxyHost;
@@ -234,7 +221,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Gets the port of the proxy.
-     * 
+     *
      * @return the port of the proxy
      */
     public Integer getProxyPort() {
@@ -243,9 +230,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the port of the proxy.
-     * 
-     * @param proxyPort
-     *            the port of the proxy
+     *
+     * @param proxyPort the port of the proxy
      */
     public void setProxyPort(Integer proxyPort) {
         this.proxyPort = proxyPort;
@@ -253,9 +239,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the user name for proxy authentication.
-     * 
-     * @param proxyUsername
-     *            the user name for proxy authentication
+     *
+     * @param proxyUsername the user name for proxy authentication
      */
     public void setProxyUsername(String proxyUsername) {
         this.proxyUsername = proxyUsername;
@@ -263,9 +248,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the password for proxy authentication.
-     * 
-     * @param proxyPassword
-     *            the password for proxy authentication
+     *
+     * @param proxyPassword the password for proxy authentication
      */
     public void setProxyPassword(String proxyPassword) {
         this.proxyPassword = proxyPassword;
@@ -273,7 +257,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Gets the pattern to convert the time.
-     * 
+     *
      * @return the pattern to convert the time
      */
     public String getSendTimePattern() {
@@ -282,9 +266,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the pattern to convert the time.
-     * 
-     * @param sendTimePattern
-     *            the pattern to convert the time
+     *
+     * @param sendTimePattern the pattern to convert the time
      */
     public void setSendTimePattern(String sendTimePattern) {
         this.sendTimePattern = sendTimePattern;
@@ -292,7 +275,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Gets the default message type.
-     * 
+     *
      * @return the default message type
      */
     public String getDefaultMessageType() {
@@ -301,9 +284,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Sets the default message type.
-     * 
-     * @param defaultMessageType
-     *            the default message type
+     *
+     * @param defaultMessageType the default message type
      */
     public void setDefaultMessageType(String defaultMessageType) {
         this.defaultMessageType = defaultMessageType;
@@ -317,7 +299,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
      * service.model.SmsSendRequestDto)
      */
     @Override
-    public SmsSendResponseDto doSendSms(final SmsSendRequestDto smsSendRequest) throws SmsException {
+    public SmsSendResponseDto doSendSms(final SmsSendRequestDto smsSendRequest) {
 
         final String sender = getSender(smsSendRequest);
 
@@ -331,31 +313,31 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
         final Charset charset = createCharset();
 
-        String url = new String(this.url);
+        String uri = this.url;
 
-        url = WebUtils.addUrlParameter(url, GATEWAY_USER_ID_KEY, username, charset);
-        url = WebUtils.addUrlParameter(url, GATEWAY_USER_PASSWORD_KEY, password, charset);
-        url = WebUtils.addUrlParameter(url, SENDER_KEY, sender, charset);
-        url = WebUtils.addUrlParameter(url, RECEIVER_KEY, receiver, charset);
-        url = WebUtils.addUrlParameter(url, MESSAGE_KEY, message, charset);
+        uri = WebUtils.addUrlParameter(uri, GATEWAY_USER_ID_KEY, username, charset);
+        uri = WebUtils.addUrlParameter(uri, GATEWAY_USER_PASSWORD_KEY, password, charset);
+        uri = WebUtils.addUrlParameter(uri, SENDER_KEY, sender, charset);
+        uri = WebUtils.addUrlParameter(uri, RECEIVER_KEY, receiver, charset);
+        uri = WebUtils.addUrlParameter(uri, MESSAGE_KEY, message, charset);
 
         if (StringUtils.isNotBlank(messageType)) {
-            url = WebUtils.addUrlParameter(url, MESSAGE_TYPE_KEY, messageType, charset);
+            uri = WebUtils.addUrlParameter(uri, MESSAGE_TYPE_KEY, messageType, charset);
         }
         if (time != null) {
-            url = WebUtils.addUrlParameter(url, TIME_KEY, time, charset);
+            uri = WebUtils.addUrlParameter(uri, TIME_KEY, time, charset);
         }
 
-        url = WebUtils.addUrlParameter(url, GET_MSG_ID_KEY, GET_MSG_ID_VALUE, charset);
-        url = WebUtils.addUrlParameter(url, GET_COUNT_MSG_KEY, GET_COUNT_MSG_VALUE, charset);
-        url = WebUtils.addUrlParameter(url, GET_LIMIT_KEY, GET_LIMIT_VALUE, charset);
-        url = WebUtils.addUrlParameter(url, GET_STATUS_KEY, GET_STATUS_VALUE, charset);
+        uri = WebUtils.addUrlParameter(uri, GET_MSG_ID_KEY, GET_MSG_ID_VALUE, charset);
+        uri = WebUtils.addUrlParameter(uri, GET_COUNT_MSG_KEY, GET_COUNT_MSG_VALUE, charset);
+        uri = WebUtils.addUrlParameter(uri, GET_LIMIT_KEY, GET_LIMIT_VALUE, charset);
+        uri = WebUtils.addUrlParameter(uri, GET_STATUS_KEY, GET_STATUS_VALUE, charset);
 
         final StringBuilder sb = new StringBuilder();
         HttpURLConnection con = null;
         InputStreamReader in = null;
-        try {
-            con = createHttpURLConnection(url);
+        try { // NOSONAR
+            con = createHttpURLConnection(uri);
 
             con.connect();
 
@@ -380,16 +362,14 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
         }
 
         final GoyyaSmsSendResponseDto goyyaSmsSendResponse = new GoyyaSmsSendResponseDto(sb.toString());
-        final SmsSendResponseDto smsSendResponse = new SmsSendResponseDto(smsSendRequest, goyyaSmsSendResponse.isOk(),
+        return new SmsSendResponseDto(smsSendRequest, goyyaSmsSendResponse.isOk(),
                 goyyaSmsSendResponse);
-        return smsSendResponse;
     }
 
     /**
      * Returns the message type.
-     * 
-     * @param message
-     *            the message
+     *
+     * @param message the message
      * @return the message type
      */
     protected String getMessageType(final String message) {
@@ -402,36 +382,33 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
     /**
      * Creates the send time URL parameter value.
-     * 
-     * @param sendTime
-     *            the send time as {@link Date}
+     *
+     * @param sendTime the send time as {@link Date}
      * @return the send time URL parameter value
      */
     protected String createSendTime(final Date sendTime) {
         if (sendTime == null || new Date(System.currentTimeMillis() + 1000L * 60L).after(sendTime)) {
             return null;
         }
-        String sendTimePattern = StringUtils.isBlank(this.sendTimePattern) ? DEFAULT_SEND_TIME_PATTERN
+        String customSendTimePattern = StringUtils.isBlank(this.sendTimePattern) ? DEFAULT_SEND_TIME_PATTERN
                 : this.sendTimePattern;
-        SimpleDateFormat sdf = new SimpleDateFormat(sendTimePattern, Locale.GERMANY);
+        SimpleDateFormat sdf = new SimpleDateFormat(customSendTimePattern, Locale.GERMANY);
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
         return sdf.format(sendTime);
     }
 
     /**
      * Creates the URL connection.
-     * 
-     * @param url
-     *            the URL
+     *
+     * @param url the URL
      * @return the URL connection
-     * @throws IOException
-     *             if creation of the URL connection fails
+     * @throws IOException if creation of the URL connection fails
      */
     protected HttpURLConnection createHttpURLConnection(final String url) throws IOException {
 
         URL sendUrl = new URL(url);
 
-        HttpURLConnection con = null;
+        HttpURLConnection con;
 
         if (StringUtils.isNotBlank(proxyHost) && proxyPort != null) {
 
@@ -450,7 +427,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
         }
 
         try {
-            if (url.toString().toLowerCase().startsWith("https")) {
+            if (url.toLowerCase().startsWith("https")) {
                 HttpsURLConnection secCon = (HttpsURLConnection) con;
                 secCon.setHostnameVerifier(createAllHostnamesVerifier());
                 SSLContext sc = SSLContext.getInstance("TLS");
@@ -458,15 +435,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
                 secCon.setSSLSocketFactory(sc.getSocketFactory());
             }
 
-        } catch (NoSuchAlgorithmException e) {
-            IOException ise = new IOException(e);
-            // log.error("Creating HttpURLConnection failed.", ise);
-            throw ise;
-
-        } catch (KeyManagementException e) {
-            IOException ise = new IOException(e);
-            // log.error("Creating HttpURLConnection failed.", ise);
-            throw ise;
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new IOException(e);
         }
 
         return con;
@@ -496,42 +466,23 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
      * Creates an array of trust managers which trusts all X509 certificates.
      */
     protected TrustManager[] createTrustAllManagers() {
-        return new TrustManager[] {
+        return new TrustManager[]{
 
-                new X509TrustManager() {
+                new X509TrustManager() { // NOSONAR
 
-                    /*
-                     * (non-Javadoc)
-                     * 
-                     * @see javax.net.ssl.X509TrustManager#getAcceptedIssuers()
-                     */
                     @Override
                     public X509Certificate[] getAcceptedIssuers() {
-                        return null;
+                        return null; // NOSONAR
                     }
 
-                    /*
-                     * (non-Javadoc)
-                     * 
-                     * @see
-                     * javax.net.ssl.X509TrustManager#checkClientTrusted(java.
-                     * security.cert.X509Certificate[], java.lang.String)
-                     */
                     @Override
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) { // NOSONAR
                     }
 
-                    /*
-                     * (non-Javadoc)
-                     * 
-                     * @see
-                     * javax.net.ssl.X509TrustManager#checkServerTrusted(java.
-                     * security.cert.X509Certificate[], java.lang.String)
-                     */
                     @Override
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) { // NOSONAR
                     }
-                } };
+                }};
     }
 
 }
