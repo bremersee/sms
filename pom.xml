@@ -8,6 +8,7 @@
   <version>1.0.4</version>
   <name>bremersee-sms</name>
   <description>SMS service project</description>
+  <url>https://github.com/bremersee/sms</url>
 
   <properties>
     <github.global.server>github</github.global.server>
