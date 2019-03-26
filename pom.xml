@@ -16,7 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <product.vendor>bremersee.org</product.vendor>
-    <inceptionYear>2015</inceptionYear>
+    <inceptionYear>2019</inceptionYear>
 
     <commons-codec.version>1.12</commons-codec.version>
     <commons-io.version>2.6</commons-io.version>
