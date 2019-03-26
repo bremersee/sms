@@ -36,7 +36,7 @@ public class XmlSchemaTests {
    * @throws JAXBException the jaxb exception
    */
   @Before
-  public void createJAXBContext() throws JAXBException {
+  public void createJaxbContext() throws JAXBException {
     this.jaxbContext = JAXBContext.newInstance(
         org.bremersee.sms.model.ObjectFactory.class.getPackage().getName()
     );

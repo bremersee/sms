@@ -159,19 +159,19 @@ public class GoyyaSmsSendResponseDto implements Serializable {
    * @return the id
    */
   @XmlElement(name = "ID")
-  @JsonProperty(value = "id")
+  @JsonProperty(value = "ID")
   public String getId() {
     return id;
   }
 
   /**
-   * Sets the id from the Goyya SMS service.
+   * Sets the ID from the Goyya SMS service.
    *
-   * @param iD the d
+   * @param id the ID
    */
-  @JsonProperty(value = "id")
-  protected void setId(String iD) {
-    id = iD;
+  @JsonProperty(value = "ID")
+  protected void setId(String id) {
+    this.id = id;
   }
 
   /**
@@ -362,8 +362,8 @@ public class GoyyaSmsSendResponseDto implements Serializable {
         return false;
       }
       ResponseParsingExceptionDto that = (ResponseParsingExceptionDto) o;
-      return Objects.equals(message, that.message) &&
-          Objects.equals(stackTrace, that.stackTrace);
+      return Objects.equals(message, that.message)
+          && Objects.equals(stackTrace, that.stackTrace);
     }
 
     @Override
