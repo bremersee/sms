@@ -297,12 +297,12 @@ public class SmsSendRequestDto implements Serializable {
       return false;
     }
     SmsSendRequestDto that = (SmsSendRequestDto) o;
-    return Objects.equals(requestId, that.requestId) &&
-        Objects.equals(sender, that.sender) &&
-        Objects.equals(receiver, that.receiver) &&
-        Objects.equals(message, that.message) &&
-        Objects.equals(sendTime, that.sendTime) &&
-        Objects.equals(extension, that.extension);
+    return Objects.equals(requestId, that.requestId)
+        && Objects.equals(sender, that.sender)
+        && Objects.equals(receiver, that.receiver)
+        && Objects.equals(message, that.message)
+        && Objects.equals(sendTime, that.sendTime)
+        && Objects.equals(extension, that.extension);
   }
 
   @Override

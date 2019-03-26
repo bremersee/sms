@@ -45,7 +45,7 @@ import org.bremersee.sms.GoyyaSmsService;
 @XmlRootElement(name = "goyyaSmsSendResponse")
 @XmlType(name = "goyyaSmsSendResponseType", propOrder = {
     "response",
-    "ID",
+    "id",
     "count",
     "responseParsingException"
 })
@@ -60,7 +60,7 @@ import org.bremersee.sms.GoyyaSmsService;
 )
 @JsonPropertyOrder(value = {
     "response",
-    "ID",
+    "id",
     "count",
     "responseParsingException"
 })
@@ -73,7 +73,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
 
   private String response;
 
-  private String ID;
+  private String id;
 
   private Integer count;
 
@@ -104,7 +104,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
           String[] a = tmp.split(Pattern.quote(","));
 
           if (a.length > 0) {
-            this.ID = a[0].trim();
+            this.id = a[0].trim();
           }
 
           if (a.length > 1) {
@@ -154,24 +154,24 @@ public class GoyyaSmsSendResponseDto implements Serializable {
   }
 
   /**
-   * Returns the ID from the Goyya SMS service.
+   * Returns the id from the Goyya SMS service.
    *
    * @return the id
    */
   @XmlElement(name = "ID")
-  @JsonProperty(value = "ID")
-  public String getID() {
-    return ID;
+  @JsonProperty(value = "id")
+  public String getId() {
+    return id;
   }
 
   /**
-   * Sets the ID from the Goyya SMS service.
+   * Sets the id from the Goyya SMS service.
    *
    * @param iD the d
    */
-  @JsonProperty(value = "ID")
-  protected void setID(String iD) {
-    ID = iD;
+  @JsonProperty(value = "id")
+  protected void setId(String iD) {
+    id = iD;
   }
 
   /**
@@ -222,7 +222,7 @@ public class GoyyaSmsSendResponseDto implements Serializable {
   public String toString() {
     return "GoyyaSmsSendResponseDto {"
         + "response='" + response + '\''
-        + ", ID='" + ID + '\''
+        + ", id='" + id + '\''
         + ", count=" + count
         + ", responseParsingException=" + responseParsingException
         + '}';
@@ -237,15 +237,15 @@ public class GoyyaSmsSendResponseDto implements Serializable {
       return false;
     }
     GoyyaSmsSendResponseDto that = (GoyyaSmsSendResponseDto) o;
-    return Objects.equals(response, that.response) &&
-        Objects.equals(ID, that.ID) &&
-        Objects.equals(count, that.count) &&
-        Objects.equals(responseParsingException, that.responseParsingException);
+    return Objects.equals(response, that.response)
+        && Objects.equals(id, that.id)
+        && Objects.equals(count, that.count)
+        && Objects.equals(responseParsingException, that.responseParsingException);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(response, ID, count, responseParsingException);
+    return Objects.hash(response, id, count, responseParsingException);
   }
 
   /**

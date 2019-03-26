@@ -75,6 +75,7 @@ public class BufferSchemaOutputResolver extends SchemaOutputResolver {
     return buffers.get(namespaceUri).getSystemId();
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (String s : buffers.keySet()) {

@@ -99,7 +99,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
   private static final String TIME_KEY = "time";
 
-  private static final String GET_MSG_ID_KEY = "getID";
+  private static final String GET_MSG_ID_KEY = "getId";
   private static final String GET_MSG_ID_VALUE = "1";
 
   private static final String GET_COUNT_MSG_KEY = "countMsg";
@@ -129,8 +129,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
 
   /**
    * The default message type.
-   * <p>
-   * It can be {@code t|f|b|c} (t=Text-SMS, f=Flash-SMS, b=Blink-SMS*, c=long SMS).
+   *
+   * <p>It can be {@code t|f|b|c} (t=Text-SMS, f=Flash-SMS, b=Blink-SMS*, c=long SMS).
    */
   private String defaultMessageType = MESSAGE_TYPE_TEXT_VALUE;
 
@@ -327,7 +327,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
     String response;
     HttpURLConnection con = null;
     try {
-      con = createHttpURLConnection(uriBuilder.toString());
+      con = createHttpUrlConnection(uriBuilder.toString());
       con.connect();
       int statusCode = con.getResponseCode();
       if (statusCode >= 400) {
@@ -408,7 +408,7 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
    * @return the URL connection
    * @throws IOException if creation of the URL connection fails
    */
-  protected HttpURLConnection createHttpURLConnection(final String url) throws IOException {
+  protected HttpURLConnection createHttpUrlConnection(final String url) throws IOException {
 
     URL sendUrl = new URL(url);
 
@@ -478,7 +478,8 @@ public class GoyyaSmsService extends AbstractSmsService implements SmsService {
           @Override
           public void checkServerTrusted(X509Certificate[] certs, String authType) {
           }
-        }};
+        }
+    };
   }
 
   /**

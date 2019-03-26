@@ -24,41 +24,41 @@ package org.bremersee.sms;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SmsException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor.
-     */
-    public SmsException() {
-        super();
-    }
+  /**
+   * Default constructor.
+   */
+  public SmsException() {
+    super();
+  }
 
-    /**
-     * Constructs the exception with the specified message.
-     *
-     * @param message the exception message
-     */
-    public SmsException(String message) {
-        super(message);
-    }
+  /**
+   * Constructs the exception with the specified message.
+   *
+   * @param message the exception message
+   */
+  public SmsException(String message) {
+    super(message);
+  }
 
-    /**
-     * Constructs the exception with the specified cause.
-     *
-     * @param cause the cause
-     */
-    public SmsException(Throwable cause) {
-        super(cause);
-    }
+  /**
+   * Constructs the exception with the specified cause.
+   *
+   * @param cause the cause
+   */
+  public SmsException(Throwable cause) {
+    super(cause);
+  }
 
-    /**
-     * Constructs the exception with the specified message and cause.
-     *
-     * @param message the exception message
-     * @param cause   the cause
-     */
-    public SmsException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  /**
+   * Constructs the exception with the specified message and cause.
+   *
+   * @param message the exception message
+   * @param cause   the cause
+   */
+  public SmsException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

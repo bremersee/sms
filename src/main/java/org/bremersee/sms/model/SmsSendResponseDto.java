@@ -188,9 +188,9 @@ public class SmsSendResponseDto implements Serializable {
       return false;
     }
     SmsSendResponseDto that = (SmsSendResponseDto) o;
-    return successfullySent == that.successfullySent &&
-        Objects.equals(request, that.request) &&
-        Objects.equals(extension, that.extension);
+    return successfullySent == that.successfullySent
+        && Objects.equals(request, that.request)
+        && Objects.equals(extension, that.extension);
   }
 
   @Override
